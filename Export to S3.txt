@@ -1,0 +1,15 @@
+# Step 8 - Save processed dataset locally
+output_file = 'processed_titanic.csv'
+df_features.to_csv(output_file, index=False)
+print("Processed dataset saved locally as:", output_file)
+
+# Upload processed dataset to S3
+processed_key = 'processed/processed_titanic.csv' # Path in S3
+s3.upload_file(output_file, bucket_name, processed_key)
+print("Processed dataset uploaded to S3 at:", f"s3://{bucket_name}/{processed_key}")
+
+# Verify upload
+resp = s3.list_objects_v2(Bucket=bucket_name, Prefix='processed/')
+if 'Contents' in resp:
+    for obj in resp['Contents' ]:
+        print(" -", obj['Key'], "(size:", obj['Size'], "bytes)")
