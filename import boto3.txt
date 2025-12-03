@@ -1,0 +1,11 @@
+import boto3
+import pandas as pd
+import io
+
+s3 = boto3.client('s3')
+
+bucket_name = 'iris-01'
+file_key = 'Iris.csv'
+
+# Download file Locally
+s3.download_file(bucket_name, file_key, 'Iris.csv')
